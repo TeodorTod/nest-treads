@@ -7,7 +7,7 @@ import { Model } from 'mongoose';
 
 @Injectable()
 export class CommentsService {
-  constructor(@InjectModel(Comment.name) private commentModel: Model<Comment>) {}
+  constructor(@InjectModel(Comment.name) private commentModel: Model<Comment>) { }
   create(createCommentDto: CreateCommentDto) {
     const createdComment = this.commentModel.create({
       text: createCommentDto.text,
@@ -19,8 +19,22 @@ export class CommentsService {
     });
   }
 
-  findAll() {
-    return this.commentModel.find().populate(['user', 'parent']).exec();
+  getToplevelComments() {
+    return this.commentModel
+      .find({
+        parent: null
+      })
+      .populate(['user', 'parent'])
+      .exec();
+  }
+
+  getCommentsByParentId(parentId: string) {
+    return this.commentModel
+      .find({
+        parent: parentId
+      })
+      .populate(['user', 'parent'])
+      .exec();
   }
 
   findOne(id: number) {
