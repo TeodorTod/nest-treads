@@ -5,7 +5,7 @@ import { User } from 'src/users/schemas/user.schema';
 export type CommentDocument = HydratedDocument<Comment>;
 
 @Schema({
-  timestamps: true
+  timestamps: true,
 })
 export class Comment {
   @Prop()
@@ -14,10 +14,10 @@ export class Comment {
   @Prop()
   likes: number;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User'})
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })
   user: User;
 
-  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment'})
+  @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'Comment' })
   parent: Comment | null;
 }
 
